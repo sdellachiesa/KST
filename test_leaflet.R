@@ -13,9 +13,9 @@ m <- leaflet(KSTS_1_2ord) %>%
   setView(13.169629, 50.860422, zoom = 7)%>%
   addProviderTiles(providers$OpenTopoMap, group='Topo') %>%
   addProviderTiles(providers$Esri.WorldImagery, group='Satellite') %>%
-  #addProviderTiles(providers$OpenStreetMap.DE, group='Openstreet') %>%
   addLayersControl(baseGroups = c('Topo', 'Satellite')) %>%
   addMarkers(~lon,~lat, popup=KSTS_1_2ord$Name)
+m
 m
 
 
