@@ -4,6 +4,7 @@ if (!require("leaflet.providers")) install.packages("leaflet.providers")
 if (!require("magrittr")) install.packages("magrittr")
 if (!require("RColorBrewer")) install.packages("RColorBrewer")
 if (!require("dplyr")) install.packages("dplyr")
+if (!require("rsconnect")) install.packages("connect")
 
 # --- Load Data
 
@@ -52,3 +53,9 @@ server <- function(input, output, session){
 }
 
 shinyApp(ui, server)
+
+# ----
+library(rsconnect)
+getwd()
+rsconnect::deployApp("~/00_Stefano/21_R/app.R")
+
