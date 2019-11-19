@@ -5,12 +5,13 @@ if (!require("magrittr")) install.packages("magrittr")
 if (!require("RColorBrewer")) install.packages("RColorBrewer")
 if (!require("dplyr")) install.packages("dplyr")
 if (!require("rsconnect")) install.packages("connect")
-
+if (!require("devtools")) install.packages("devtools")
 # --- Load Data
-
-mydata<-read.csv("KSTS_1_2ord_CSV.csv", stringsAsFactors=F)
-mydata$ord1<-mydata$Ord == "First"
-mydata$ord2<-mydata$Ord == "Second"
+a<-getwd()
+setwd(a)
+df<-read.csv("KSTS_1_2ord_CSV.csv")
+df$ord1<-df$Ord == "First"
+df$ord2<-df$Ord == "Second"
 
 
 
@@ -25,7 +26,7 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session){
-    df <- mydata
+    #df <- mydata
     ## create static element
     output$my_leaf <- renderLeaflet({
         leaflet() %>%
@@ -55,7 +56,4 @@ server <- function(input, output, session){
 shinyApp(ui, server)
 
 # ----
-library(rsconnect)
-getwd()
-rsconnect::deployApp("~/00_Stefano/21_R/app.R")
-
+deployApp(appDir = getwd(), appName = "Aprrr")
