@@ -72,7 +72,7 @@ server <- function(input, output, session){
         leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
             clearMarkers() %>%   ## clear previous markers
             #addMarkers(popup = paste(sep = "<br/>","<b><a href='",df$Descriptio,"'>",df$Name,"</a></b>"))
-            addMarkers(popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>","<img src = '",df$img_url, "'>"))
+            addMarkers(icon =Icons, popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>","<img src = '",df$img_url, "'>"))
         
   
         #addMarkers(popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>"))%>%
