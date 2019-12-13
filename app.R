@@ -63,8 +63,8 @@ server <- function(input, output, session){
     #https://github.com/pointhi/leaflet-color-markers
     Icons <- icons(
         iconUrl = ifelse(df$Order  ==1,
-                         "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
-                         "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png"
+                         "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+                         "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
         ))
     ## respond to the filtered data
     observe({
@@ -82,7 +82,7 @@ server <- function(input, output, session){
 }
 
 
-runApp(shinyApp(ui, server), launch.browser = TRUE)
+#runApp(shinyApp(ui, server), launch.browser = TRUE)
 
 
 # ---- to publish on shinyapps.io
