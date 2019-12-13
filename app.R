@@ -13,8 +13,6 @@ df<-read.csv("KSTS_1_2ord_CSV.csv")
 df$ord1<-df$Ord == "First"
 df$ord2<-df$Ord == "Second"
 
-
-
 ui <- fluidPage(
     sliderInput(inputId = "slider", 
                 label = "values",
@@ -48,12 +46,11 @@ server <- function(input, output, session){
         
         leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
             clearMarkers() %>%   ## clear previous markers
-            addMarkers()
+            addMarkers(popup = df$url)
     })
     
 }
 
 shinyApp(ui, server)
 
-# ----
-deployApp(appDir = getwd(), appName = "Aprrr")
+
