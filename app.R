@@ -2,21 +2,21 @@ if (!require("shiny")) install.packages("shiny")
 if (!require("leaflet")) install.packages("leaflet")
 if (!require("leaflet.providers")) install.packages("leaflet.providers")
 if (!require("magrittr")) install.packages("magrittr")
-if (!require("RColorBrewer")) install.packages("RColorBrewer")
-if (!require("dplyr")) install.packages("dplyr")
-if (!require("rsconnect")) install.packages("connect")
-if (!require("devtools")) install.packages("devtools")
-if (!require("htmltools")) install.packages("htmltools")
+#if (!require("RColorBrewer")) install.packages("RColorBrewer")
+#if (!require("dplyr")) install.packages("dplyr")
+#if (!require("rsconnect")) install.packages("connect")
+#if (!require("devtools")) install.packages("devtools")
+#if (!require("htmltools")) install.packages("htmltools")
 if (!require("leaflet.extras")) install.packages("leaflet.extras")
 
 
 # --- Load Data
 a<-getwd()
 setwd(a)
-df<-read.csv("KSTS_MERGED_1_2ord_CSV.csv")
+df<-read.csv("./KSTS_MERGED_1_2ord_CSV.csv")
 #df<-read.csv("KSTS_MERGED_1_2ord_CSV_v2.csv",fileEncoding = "UTF-8")
-df$ord1<-df$Ord == "1"
-df$ord2<-df$Ord == "2"
+#df$ord1<-df$Ord == "1"
+#df$ord2<-df$Ord == "2"
 
 ui <- fluidPage(
     sliderInput(inputId = "slider", 
@@ -72,7 +72,7 @@ server <- function(input, output, session){
         leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
             clearMarkers() %>%   ## clear previous markers
             #addMarkers(popup = paste(sep = "<br/>","<b><a href='",df$Descriptio,"'>",df$Name,"</a></b>"))
-            addMarkers(icon =Icons, popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>","<img src = '",df$img_url, "'>"))
+            addMarkers(popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>","<img src = '",df$img_url, "'>"))
         
   
         #addMarkers(popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>"))%>%
@@ -85,3 +85,13 @@ server <- function(input, output, session){
 runApp(shinyApp(ui, server), launch.browser = TRUE)
 
 
+# ---- to publish on shinyapps.io
+#library(git2r)
+#library(rsconnect)
+#deployApp()
+#deployApp(appName ="TriangulationNetwork")
+#https://stefanodellachiesa.shinyapps.io/Aprrr/
+
+
+#rsconnect::deployApp('C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\app.R', appFiles = c('C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\KSTS_MERGED_1_2ord_CSV.csv'),
+                     # account = 'stefano.dellachiesa@gmail.com', server = 'shinyapps.io')
