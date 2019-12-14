@@ -14,7 +14,6 @@ if (!require("leaflet.extras")) install.packages("leaflet.extras")
 a<-getwd()
 setwd(a)
 df<-read.csv("./KSTS_MERGED_1_2ord_CSV.csv")
-#df_filtered <- df
 #df<-read.csv("KSTS_MERGED_1_2ord_CSV_v2.csv",fileEncoding = "UTF-8")
 #df$ord1<-df$Ord == "1"
 #df$ord2<-df$Ord == "2"
@@ -57,26 +56,27 @@ server <- function(input, output, session){
     })
     
     ## filter data
-    
-    #head(df[df$Elevation >=800,])
+    #df_filtered <- reactive({df[df$Elevation >= 1000, ]    })
+   # pippo<-isolate(df_filtered())
     
     df_filtered <- reactive({
         df[df$Elevation >= input$slider, ]
     })
     ## icons
     #https://github.com/pointhi/leaflet-color-markers
+    pippo<-isolate(df_filtered()) 
     Icons <- icons(
-        iconUrl = ifelse(df_filtered$Order  ==1,
+        iconUrl = ifelse(pippo$Order  ==1,
                          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
                          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
-                         ))
+        ))
     ## respond to the filtered data
     observe({
         
         leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
             clearMarkers() %>%   ## clear previous markers
             #addMarkers(popup = paste(sep = "<br/>","<b><a href='",df$Descriptio,"'>",df$Name,"</a></b>"))
-            addMarkers(popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>","<img src = '",df$img_url, "'>"))
+            addMarkers(icon =Icons, popup = paste("<b><a href='",data$wiki_url,"'>",data$Name,"</a></b>","<br>","<img src = '",data$img_url, "'>"))
         
   
         #addMarkers(popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>"))%>%
