@@ -55,10 +55,10 @@ server <- function(input, output, session){
         
     })
     
-    ## filter data
+    ## debug filter data
     #df_filtered <- reactive({df[df$Elevation >= 1000, ]    })
-   # pippo<-isolate(df_filtered())
-    
+    #isolate(df_filtered()) # return the reactive valure (filtered records df$Elevation >= 1000)
+    ##  filter data
     df_filtered <- reactive({
         df[df$Elevation >= input$slider, ]
     })
@@ -76,8 +76,9 @@ server <- function(input, output, session){
         leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
             clearMarkers() %>%   ## clear previous markers
             #addMarkers(popup = paste(sep = "<br/>","<b><a href='",df$Descriptio,"'>",df$Name,"</a></b>"))
-            addMarkers(icon =Icons, popup = paste("<b><a href='",data$wiki_url,"'>",data$Name,"</a></b>","<br>","<img src = '",data$img_url, "'>"))
-        
+        #addMarkers()    
+      addMarkers(icon =Icons, popup = paste("<b><a href='",pippo$wiki_url,"'>",pippo$Name,"</a></b>","<br>","<img src = '",pippo$img_url, "'>"))
+     
   
         #addMarkers(popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>"))%>%
         #addMarkers(popup = popupImage(paste("<img src = '",df$img_url, "'>"), embed= TRUE, width = 300))
