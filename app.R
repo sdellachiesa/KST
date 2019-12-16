@@ -13,8 +13,8 @@ if (!require("leaflet.extras")) install.packages("leaflet.extras")
 # --- Load Data
 a<-getwd()
 setwd(a)
-df<-read.csv("./KSTS_MERGED_1_2ord_CSV.csv")
-#df<-read.csv("KSTS_MERGED_1_2ord_CSV_v2.csv",fileEncoding = "UTF-8")
+df<-read.csv("./KST_MERGED_1_2ord_CSV.csv")
+#df<-read.csv("KST_MERGED_1_2ord_CSV_v2.csv",fileEncoding = "UTF-8")
 #df$ord1<-df$Ord == "1"
 #df$ord2<-df$Ord == "2"
 
@@ -56,38 +56,37 @@ server <- function(input, output, session){
     })
     
     ## debug filter data
-    df_filtered <- reactive({df[df$Elevation >= 1000, ]    })
-    isolate(df_filtered()) # return the reactive valure (filtered records df$Elevation >= 1000)
+    #df_filtered <- reactive({df[df$Elevation >= 850, ]    })
+    
+     # return the reactive valure (filtered records df$Elevation >= 1000)
+    #pippo<-reactiveValues(df_filtered())
+    #pippo<-get(isolate(df_filtered)) 
+    #expr_q<-quote({df_filtered()})
     ##  filter data
+    #values <- reactiveValues()
     df_filtered <- reactive({
         df[df$Elevation >= input$slider, ]
-    })
+                }
+        )
+    #values <- reactiveValues(df_filtered())
     ## icons
     #https://github.com/pointhi/leaflet-color-markers
-    pippo<-isolate(df_filtered()) 
+   
+    #pippo<- isolate(df_filtered())
     Icons <- icons(
-        iconUrl = ifelse(pippo$Order  ==1,
+        iconUrl = ifelse(isolate(df_filtered())$Order  ==1,
                          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
                          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
         ))
     ## respond to the filtered data
     observe({
-        
-        leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
+            leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
             clearMarkers() %>%   ## clear previous markers
-            #addMarkers(popup = paste(sep = "<br/>","<b><a href='",df$Descriptio,"'>",df$Name,"</a></b>"))
-        addMarkers()    
-      #addMarkers(icon =Icons, popup = paste("<b><a href='",pippo$wiki_url,"'>",pippo$Name,"</a></b>","<br>","<img src = '",pippo$img_url, "'>"))
-     
-  
-        #addMarkers(popup = paste("<b><a href='",df$wiki_url,"'>",df$Name,"</a></b>","<br>"))%>%
-        #addMarkers(popup = popupImage(paste("<img src = '",df$img_url, "'>"), embed= TRUE, width = 300))
-    })
-    
-}
+            addMarkers(icon =Icons, popup = paste("<b><a href='",isolate(df_filtered())$wiki_url,"'>",isolate(df_filtered())$Name,"</a></b>","<br>","<img src = '",isolate(df_filtered())$img_url, "'>"))
+          })
+    }
 
-
-runApp(shinyApp(ui, server), launch.browser = TRUE)
+#runApp(shinyApp(ui, server), launch.browser = TRUE)
 
 
 # ---- to publish on shinyapps.io
@@ -95,8 +94,9 @@ runApp(shinyApp(ui, server), launch.browser = TRUE)
 #library(rsconnect)
 #deployApp()
 #deployApp(appName ="TriangulationNetwork")
-#https://stefanodellachiesa.shinyapps.io/Aprrr/
-
 
 #rsconnect::deployApp('C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\app.R', appFiles = c('C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\KSTS_MERGED_1_2ord_CSV.csv'),
-                     # account = 'stefano.dellachiesa@gmail.com', server = 'shinyapps.io')
+ #                     account = 'stefano.dellachiesa@gmail.com', server = 'shinyapps.io')
+
+#rsconnect::deployApp('C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\app.R', appFiles = c('C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\KST_MERGED_1_2ord_CSV.csv'), account = 'stefanodellachiesa', server = 'shinyapps.io')
+#rsconnect::deployApp('C:/Users/SDellaChiesa/OneDrive - Scientific Network South Tyrol/00_R/06_KST/KST/app.R', appFiles = c('C:/Users/SDellaChiesa/OneDrive - Scientific Network South Tyrol/00_R/06_KST/KST/KST_MERGED_1_2ord_CSV.csv'), account = 'stefanodellachiesa', server = 'shinyapps.io')
