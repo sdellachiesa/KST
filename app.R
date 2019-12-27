@@ -15,8 +15,15 @@ a<-getwd()
 #setwd(a)
 df<-read.csv("./data/KST_MERGED_1_2ord_CSV.csv")
 #df<-read.csv("KST_MERGED_1_2ord_CSV_v2.csv",fileEncoding = "UTF-8")
+
+#assign proper url to depending on Order column
+    df$IconsCol = ifelse(df$Order  ==1,
+                     "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+                     "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png")
+
 #df$ord1<-df$Ord == "1"
 #df$ord2<-df$Ord == "2"
+
 
 ui <- fluidPage(
     sliderInput(inputId = "slider", 
@@ -82,10 +89,10 @@ server <- function(input, output, session){
     observe({
             leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
             clearMarkers() %>%   ## clear previous markers
-            addMarkers(icon =Icons, popup = paste("<b><a href='",isolate(df_filtered())$wiki_url,"'>",isolate(df_filtered())$Name,"</a></b>","<br>","<img src = '",isolate(df_filtered())$img_url, "'>"))
+            addMarkers(icon =icons(isolate(df_filtered())$IconsCol), popup = paste("<b><a href='",isolate(df_filtered())$wiki_url,"'>",isolate(df_filtered())$Name,"</a></b>","<br>","<img src = '",isolate(df_filtered())$img_url, "'>"))
           })
     }
-#runApp(shinyApp(ui, server), launch.browser = TRUE)
+runApp(shinyApp(ui, server), launch.browser = TRUE)
 
 
 # ---- to publish on shinyapps.io
