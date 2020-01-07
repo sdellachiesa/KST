@@ -11,9 +11,10 @@ if (!require("leaflet.extras")) install.packages("leaflet.extras")
 
 
 # --- Load Data
-a<-getwd()
+#a<-getwd()
 #setwd(a)
-df<-read.csv("./data/KST_MERGED_1_2ord_CSV.csv")
+
+df<-read.csv('./data/KST_MERGED_1_2ord_CSV.csv')
 #df<-read.csv("KST_MERGED_1_2ord_CSV_v2.csv",fileEncoding = "UTF-8")
 
 #assign proper url to depending on Order column
@@ -92,7 +93,7 @@ server <- function(input, output, session){
             addMarkers(icon =icons(isolate(df_filtered())$IconsCol), popup = paste("<b><a href='",isolate(df_filtered())$wiki_url,"'>",isolate(df_filtered())$Name,"</a></b>","<br>","<img src = '",isolate(df_filtered())$img_url, "'>"))
           })
     }
-runApp(shinyApp(ui, server), launch.browser = TRUE)
+#runApp(shinyApp(ui, server), launch.browser = TRUE)
 
 
 # ---- to publish on shinyapps.io
@@ -100,8 +101,9 @@ runApp(shinyApp(ui, server), launch.browser = TRUE)
 #library(rsconnect)
 #deployApp()
 #deployApp(appName ="TriangulationNetwork")
-
+#rsconnect::deployApp(appName ="TriangulationNetwork")
 #rsconnect::deployApp('C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\app.R', appFiles = c('C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\KST_MERGED_1_2ord_CSV.csv'),
  #                     account = 'stefano.dellachiesa@gmail.com', server = 'shinyapps.io')
 
 #rsconnect::deployApp("C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\app.R", appFiles = c("C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\KST_MERGED_1_2ord_CSV.csv"), account = 'stefanodellachiesa', server = 'shinyapps.io')
+#rsconnect::deployApp(appName ="TriangulationNetwork")
