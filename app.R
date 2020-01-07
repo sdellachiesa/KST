@@ -92,7 +92,7 @@ server <- function(input, output, session){
             addMarkers(icon =icons(isolate(df_filtered())$IconsCol), popup = paste("<b><a href='",isolate(df_filtered())$wiki_url,"'>",isolate(df_filtered())$Name,"</a></b>","<br>","<img src = '",isolate(df_filtered())$img_url, "'>"))
           })
     }
-runApp(shinyApp(ui, server), launch.browser = TRUE)
+shinyApp(ui, server)
 
 
 # ---- to publish on shinyapps.io
