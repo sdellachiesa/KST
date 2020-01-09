@@ -100,13 +100,17 @@ server <- function(input, output, session){
     #pippo<- isolate(df_filtered())
       ## respond to the filtered data
     observe({
-            leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
-            clearMarkers() %>%   ## clear previous markers
-            addMarkers(icon =icons(iconUrl = isolate(df_filtered())$IconsCol, iconAnchorX = 0,iconAnchorY = 0,iconHeight = 40,iconWidth = 25),
+            proxy<-leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
+            clearMarkers() %>%
+                      addMarkers(icon =icons(iconUrl = isolate(df_filtered())$IconsCol, iconAnchorX = 0,iconAnchorY = 0,iconHeight = 40,iconWidth = 25),
                        popup = paste("<b><a href='",isolate(df_filtered())$wiki_url,"'>",
                                      isolate(df_filtered())$Name,"</a></b>","<br>","<img src = '",
                                      isolate(df_filtered())$img_url, "'>"),
-                                    )
+                        )## clear previous markers
+             proxy<-proxy%>%
+                 flyToBounds(lng1 = max(df_filtered()$lon),lat1 = max(df_filtered()$lat),
+                             lng2 = min(df_filtered()$lon),lat2 = max(df_filtered()$lat),
+                             options = list(maxZoom = 12))           
       
       #output$my_table<- renderTable(c(as.character(df_filtered()$Name),
                                      # as.character(df_filtered()$Elevation)))
