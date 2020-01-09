@@ -13,8 +13,15 @@ if (!require("leaflet.extras")) install.packages("leaflet.extras")
 # --- Load Data
 #a<-getwd()
 #setwd(a)
-
+#options(digits = 8)  
 df<-read.csv('./data/KST_MERGED_1_2ord_CSV.csv')
+df$lat = as.numeric(format(df$lat, digits = 9))
+df$lon = as.numeric(format(df$lon, digits = 9))
+
+df_table<-df[c(3,7,8)]
+
+
+#class(df$lon)
 #df<-read.csv("KST_MERGED_1_2ord_CSV_v2.csv",fileEncoding = "UTF-8")
 
 #assign proper url to depending on Order column
@@ -22,6 +29,7 @@ df<-read.csv('./data/KST_MERGED_1_2ord_CSV.csv')
                      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
                      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png")
 
+    
 #df$ord1<-df$Ord == "1"
 #df$ord2<-df$Ord == "2"
 
@@ -31,14 +39,17 @@ ui <- fluidPage(
                 label = "Filter Station by Elevation",
                 min = min(df$Elevation),
                 max = max(df$Elevation),
-                value = 92,
+                value = c(min,max),
                 step = 10),
-    leafletOutput("my_leaf")
+    leafletOutput("my_leaf"),
+    tableOutput("my_table")
 )
 
 server <- function(input, output, session){
     #df <- mydata
     ## create static element
+  
+
     output$my_leaf <- renderLeaflet({
         leaflet() %>%
             addProviderTiles(providers$OpenTopoMap, group='Topo') %>%
@@ -63,6 +74,7 @@ server <- function(input, output, session){
         
     })
     
+    
     ## debug filter data
     #df_filtered <- reactive({df[df$Elevation >= 850, ]    })
     
@@ -73,30 +85,38 @@ server <- function(input, output, session){
     ##  filter data
     #values <- reactiveValues()
     df_filtered <- reactive({
-        df[df$Elevation >= input$slider, ]
-                }
-        )
+      df[df$Elevation >= input$slider[1] & df$Elevation <= input$slider[2] , ]
+    }
+    )
+    df_table_filtered <- reactive({
+      df_table[df_table$Elevation >= input$slider[1] & df_table$Elevation <= input$slider[2] , ]
+    }
+    )
+    
     #values <- reactiveValues(df_filtered())
     ## icons
     #https://github.com/pointhi/leaflet-color-markers
    
     #pippo<- isolate(df_filtered())
-    Icons <- icons(
-        iconUrl = ifelse(isolate(df_filtered())$Order  ==1,
-                         "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
-                         "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
-        ))
-    ## respond to the filtered data
+      ## respond to the filtered data
     observe({
             leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
             clearMarkers() %>%   ## clear previous markers
-            addMarkers(icon =icons(isolate(df_filtered())$IconsCol), popup = paste("<b><a href='",isolate(df_filtered())$wiki_url,"'>",isolate(df_filtered())$Name,"</a></b>","<br>","<img src = '",isolate(df_filtered())$img_url, "'>"))
+            addMarkers(icon =icons(iconUrl = isolate(df_filtered())$IconsCol, iconAnchorX = 0,iconAnchorY = 0,iconHeight = 40,iconWidth = 25),
+                       popup = paste("<b><a href='",isolate(df_filtered())$wiki_url,"'>",
+                                     isolate(df_filtered())$Name,"</a></b>","<br>","<img src = '",
+                                     isolate(df_filtered())$img_url, "'>"),
+                                    )
+      
+      #output$my_table<- renderTable(c(as.character(df_filtered()$Name),
+                                     # as.character(df_filtered()$Elevation)))
+      output$my_table<- renderTable(df_table_filtered())
           })
     }
 shinyApp(ui, server)
 
 
-
+#runApp(shinyApp(ui, server), launch.browser = TRUE)
 # ---- to publish on shinyapps.io
 #library(git2r)
 #library(rsconnect)
