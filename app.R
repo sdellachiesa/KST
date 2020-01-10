@@ -8,6 +8,8 @@ if (!require("magrittr")) install.packages("magrittr")
 if (!require("devtools")) install.packages("devtools")
 #if (!require("htmltools")) install.packages("htmltools")
 if (!require("leaflet.extras")) install.packages("leaflet.extras")
+if (!require("shinydashboard")) install.packages("shinydashboard")
+
 
 
 # --- Load Data
@@ -33,19 +35,30 @@ df_table<-df[c(3,7,8)]
 #df$ord1<-df$Ord == "1"
 #df$ord2<-df$Ord == "2"
 
-
+    
 ui <- fluidPage(
-    sliderInput(inputId = "slider", 
-                label = "Filter Station by Elevation",
-                min = min(df$Elevation),
-                max = max(df$Elevation),
-                value = c(min,max),
-                step = 10),
-    leafletOutput("my_leaf"),
-    tableOutput("my_table")
+  h1("Royal Saxon Triangulation Network"),
+  p(style = "font-family:Impact",
+    " ",
+    a("Wikipedia",
+      href = "https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsische_Triangulirung")
+  ),
+  sidebarLayout(sidebarPanel
+                      (sliderInput(inputId = "slider", 
+                      label = "Filter Station by Elevation",
+                      min = min(df$Elevation),
+                      max = max(df$Elevation),
+                      value = c(min,max),
+                      step = 10),
+                      DT::dataTableOutput("my_table")
+                      ),
+          mainPanel(leafletOutput("my_leaf"),
+                    )
+          )
 )
-
-server <- function(input, output, session){
+        
+       
+server <- function(input, output){
     #df <- mydata
     ## create static element
   
@@ -55,7 +68,9 @@ server <- function(input, output, session){
             addProviderTiles(providers$OpenTopoMap, group='Topo') %>%
             addProviderTiles(providers$Esri.WorldImagery, group='Satellite') %>%
             addLayersControl(baseGroups = c('Topo', 'Satellite'))%>%
-            setView(13.169629, 50.860422, zoom = 7.5)%>%
+            #setView(11.643167,50.278278, zoom = 7)%>%
+            flyToBounds(lng1 = max(df$lon),lat1 = max(df$lat),
+                        lng2 = min(df$lon),lat2 = min(df$lat))%>%
             addFullscreenControl()%>%
             addEasyButton(
                 easyButton(
@@ -109,14 +124,18 @@ server <- function(input, output, session){
                         )## clear previous markers
              proxy<-proxy%>%
                  flyToBounds(lng1 = max(df_filtered()$lon),lat1 = max(df_filtered()$lat),
-                             lng2 = min(df_filtered()$lon),lat2 = max(df_filtered()$lat),
+                             lng2 = min(df_filtered()$lon),lat2 = min(df_filtered()$lat),
                              options = list(maxZoom = 12))           
       
       #output$my_table<- renderTable(c(as.character(df_filtered()$Name),
                                      # as.character(df_filtered()$Elevation)))
-      output$my_table<- renderTable(df_table_filtered())
+      output$my_table<- DT::renderDataTable(DT::datatable(
+        df_table_filtered(),
+        options = list(pageLength = 10),
+        rownames = FALSE))
           })
     }
+
 shinyApp(ui, server)
 
 
