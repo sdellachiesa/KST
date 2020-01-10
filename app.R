@@ -43,19 +43,18 @@ ui <- fluidPage(
     a("Wikipedia",
       href = "https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsische_Triangulirung")
   ),
-  sidebarLayout(sidebarPanel
-                      (sliderInput(inputId = "slider", 
+  sidebarLayout(sidebarPanel(
+                leafletOutput("my_leaf"),width = 8),
+                mainPanel(sliderInput(inputId = "slider", 
                       label = "Filter Station by Elevation",
                       min = min(df$Elevation),
                       max = max(df$Elevation),
                       value = c(min,max),
-                      step = 10),
-                      DT::dataTableOutput("my_table")
-                      ),
-          mainPanel(leafletOutput("my_leaf"),
-                    )
-          )
+                      step = 10),width = 4,
+                      DT::dataTableOutput("my_table"),width = 4)
+  )
 )
+
         
        
 server <- function(input, output){
