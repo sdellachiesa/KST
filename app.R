@@ -50,7 +50,7 @@ ui <- fluidPage(
                       min = min(df$Elevation),
                       max = max(df$Elevation),
                       value = c(min,max),
-                      step = 10),width = 4,
+                      step = 10),
                       DT::dataTableOutput("my_table"),width = 4)
   )
 )
