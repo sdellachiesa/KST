@@ -11,6 +11,7 @@ if (!require("leaflet.extras")) install.packages("leaflet.extras")
 if (!require("shinydashboard")) install.packages("shinydashboard")
 
 
+
 # --- Load Data
 #a<-getwd()
 #setwd(a)
@@ -26,7 +27,7 @@ df_table<-df[c(3,7,8)]
 #df<-read.csv("KST_MERGED_1_2ord_CSV_v2.csv",fileEncoding = "UTF-8")
 
 #assign proper url to depending on Order column
-    df$IconsCol = ifelse(df$Ordnung  ==1,
+    df$IconsCol = ifelse(df$Order  ==1,
                      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
                      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png")
 
@@ -36,8 +37,7 @@ df_table<-df[c(3,7,8)]
 
     
 ui <- fluidPage(
-  h1("Königlich-Sächsische Triangulirung"),
-  #h2("Royal Saxon Triangulation Network"),
+  h1("Royal Saxon Triangulation Network"),
   p(style = "font-family:Impact",
     " ",
     a("Wikipedia",
@@ -46,21 +46,17 @@ ui <- fluidPage(
   sidebarLayout(sidebarPanel(
                 leafletOutput("my_leaf"),width = 8),
                 mainPanel(sliderInput(inputId = "slider", 
-                      label = "Wählen Sie den Höhenbereich [m]",
-                      min = min(df$Hoehe),
-                      max = max(df$Hoehe),
+                      label = "Filter Station by Elevation",
+                      min = min(df$Elevation),
+                      max = max(df$Elevation),
                       value = c(min,max),
                       step = 10),
                       DT::dataTableOutput("my_table"),width = 4)
   )
 )
 
-IconSet <- awesomeIconList(
-  green = makeAwesomeIcon(icon = "ios-close", iconColor = "white",
-                          library = "ion", markerColor = "green"))
 
-   
-    
+       
 server <- function(input, output){
     #df <- mydata
     ## create static element
@@ -94,23 +90,22 @@ server <- function(input, output){
     
     
     ## debug filter data
-    #df_filtered <- reactive({df[df$Hoehe >= 850, ]    })
+    #df_filtered <- reactive({df[df$Elevation >= 850, ]    })
     
-     # return the reactive valure (filtered records df$Hoehe >= 1000)
+     # return the reactive valure (filtered records df$Elevation >= 1000)
     #pippo<-reactiveValues(df_filtered())
     #pippo<-get(isolate(df_filtered)) 
     #expr_q<-quote({df_filtered()})
     ##  filter data
     #values <- reactiveValues()
     df_filtered <- reactive({
-      df[df$Hoehe >= input$slider[1] & df$Hoehe <= input$slider[2] , ]
+      df[df$Elevation >= input$slider[1] & df$Elevation <= input$slider[2] , ]
     }
     )
     df_table_filtered <- reactive({
-      df_table[df_table$Hoehe >= input$slider[1] & df_table$Hoehe <= input$slider[2] , ]
+      df_table[df_table$Elevation >= input$slider[1] & df_table$Elevation <= input$slider[2] , ]
     }
     )
-    
     
     #values <- reactiveValues(df_filtered())
     ## icons
@@ -119,41 +114,20 @@ server <- function(input, output){
     #pippo<- isolate(df_filtered())
       ## respond to the filtered data
     observe({
-      
-      
             proxy<-leafletProxy(mapId = "my_leaf", data = df_filtered()) %>%
-              flyToBounds(lng1 = max(df_filtered()$lon),lat1 = max(df_filtered()$lat),
-              lng2 = min(df_filtered()$lon),lat2 = min(df_filtered()$lat),
-              options = list(maxZoom = 12))%>%
-              clearMarkers() %>%
-            addAwesomeMarkers(lng = df_filtered()$lon,
-                               lat = df_filtered()$lat,
-                               #group =c(df_filtered()$Order),
-                               #icon = icons(iconUrl ="https://github.com/twbs/icons/blob/master/icons/arrow-right.svg"),
-                               #iconAnchorX = 0,
-                               #iconAnchorY = 0,
-                               #iconHeight = 40,
-                               #iconWidth = 25,
-                                popup = paste("<b><a href='",df_filtered()$wiki_url,"'>",
-                                              df_filtered()$Name,"</a></b>","<br>","<img src = '",
-                                              df_filtered()$img_url, "'>"),
-                                
-              ## clear previous markers
-            #proxy<-proxy%>%
-              
-    )
-             #  addMarkers(icon =icons(iconUrl = df_filtered()$IconsCol, iconAnchorX = 0,iconAnchorY = 0,iconHeight = 40,iconWidth = 25),
-             #           popup = paste("<b><a href='",df_filtered()$wiki_url,"'>",
-             #                         df_filtered()$Name,"</a></b>","<br>","<img src = '",
-             #                         df_filtered()$img_url, "'>"),
-             #            )## clear previous markers
-             # proxy<-proxy%>%
-             #     flyToBounds(lng1 = max(df_filtered()$lon),lat1 = max(df_filtered()$lat),
-             #                 lng2 = min(df_filtered()$lon),lat2 = min(df_filtered()$lat),
-             #                 options = list(maxZoom = 12))           
+            clearMarkers() %>%
+              addMarkers(icon =icons(iconUrl = df_filtered()$IconsCol, iconAnchorX = 0,iconAnchorY = 0,iconHeight = 40,iconWidth = 25),
+                       popup = paste("<b><a href='",df_filtered()$wiki_url,"'>",
+                                     df_filtered()$Name,"</a></b>","<br>","<img src = '",
+                                     df_filtered()$img_url, "'>"),
+                        )## clear previous markers
+             proxy<-proxy%>%
+                 flyToBounds(lng1 = max(df_filtered()$lon),lat1 = max(df_filtered()$lat),
+                             lng2 = min(df_filtered()$lon),lat2 = min(df_filtered()$lat),
+                             options = list(maxZoom = 12))
       
       #output$my_table<- renderTable(c(as.character(df_filtered()$Name),
-                                     # as.character(df_filtered()$Hoehe)))
+                                     # as.character(df_filtered()$Elevation)))
       output$my_table<- DT::renderDataTable(DT::datatable(
         df_table_filtered(),
         options = list(pageLength = 10),
@@ -176,4 +150,3 @@ shinyApp(ui, server)
 
 #rsconnect::deployApp("C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\app.R", appFiles = c("C:\Users\SDellaChiesa\OneDrive - Scientific Network South Tyrol\00_R\06_KST\KST\KST_MERGED_1_2ord_CSV.csv"), account = 'stefanodellachiesa', server = 'shinyapps.io')
 #rsconnect::deployApp(appName ="TriangulationNetwork")
-
