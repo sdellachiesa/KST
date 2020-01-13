@@ -69,7 +69,7 @@ server <- function(input, output){
     output$my_leaf <- renderLeaflet({
         leaflet() %>%
             addProviderTiles(providers$OpenTopoMap, group='Topo') %>%
-            addProviderTiles(providers$Esri.WorldImagery, group='Satellite') %>%
+            addProviderTiles(providers$Esri.WorldImagery, group='Satellite')%>%
             addLayersControl(baseGroups = c('Topo', 'Satellite'))%>%
             #setView(11.643167,50.278278, zoom = 7)%>%
             flyToBounds(lng1 = max(df$lon),lat1 = max(df$lat),
