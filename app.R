@@ -9,7 +9,6 @@ if (!require("devtools")) install.packages("devtools")
 #if (!require("htmltools")) install.packages("htmltools")
 if (!require("leaflet.extras")) install.packages("leaflet.extras")
 if (!require("shinydashboard")) install.packages("shinydashboard")
-library(magrittr)
 library(dplyr)
 
 #matthias
@@ -52,7 +51,6 @@ ui <- fluidPage(
       href = "https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsische_Triangulirung")
   ),
   sidebarLayout(sidebarPanel(
-
     leafletOutput("my_leaf"),width = 8),
     mainPanel(sliderInput(inputId = "slider", 
                           label = "Wählen Sie den Höhenbereich [m]",
@@ -60,16 +58,7 @@ ui <- fluidPage(
                           max = max(df$Hoehe),
                           value = c(min,max),
                           step = 10),
-              DT::dataTableOutput("my_table"),width = 4),
-                leafletOutput("my_leaf"),width = 8),
-                mainPanel(sliderInput(inputId = "slider", 
-                      label = "Filter Station by Elevation",
-                      min = min(df$Elevation),
-                      max = max(df$Elevation),
-                      value = c(min,max),
-                      step = 10),
-                      DT::dataTableOutput("my_table"),width = 4)
-
+              DT::dataTableOutput("my_table"),width = 4)
   )
 )
 
