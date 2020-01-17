@@ -6,19 +6,23 @@ server <- function(input, output){
     leaflet()%>%
       addPolygons(data = my_Sachsen,color = "black", 
                   weight  = 3, opacity = 1,
-                  fillOpacity = 0,smoothFactor = 1)%>%
+                  fillOpacity = 0,smoothFactor = 1, group ="Sachsen")%>%
       addPolylines(data = my_Network,color = "red", 
                    weight  = 3, opacity = 0.7, 
-                   smoothFactor = 1, dashArray ="4",
+                   smoothFactor = 1, dashArray ="4", group ="Netzwerk 1 Ord",
                    popup = paste(my_shp2$Length,"</a></b>",as.character("km"),"</a></b>")
       )%>%   
       #leaflet() %>%
       addProviderTiles(providers$OpenTopoMap, group='Topo') %>%
       addProviderTiles(providers$Esri.WorldImagery, group='Satellite')%>%
-      addLayersControl(baseGroups = c('Topo', 'Satellite'))%>%
+      addLayersControl(
+        baseGroups = c('Topo', 'Satellite'),
+        overlayGroups = c("Sachsen", "Netzwerk 1 Ord","Säule 1 Ord","Säule 2 Ord"),
+            options = layersControlOptions(collapsed = FALSE))%>%
+      hideGroup("Säule 2 Ord")%>%
       setView(13.3, 50.3,zoom = 10)%>% #13.169629, 50.860422,
       #setMaxBounds(lng1 = max(df$lon),lat1 = max(df$lat),
-                   #lng2 = min(df$lon),lat2 = min(df$lat))%>%
+      #lng2 = min(df$lon),lat2 = min(df$lat))%>%
       addFullscreenControl()%>%
       addEasyButton(
         easyButton(
@@ -61,40 +65,42 @@ server <- function(input, output){
                   lng2 = min(df_filtered()$lon),lat2 = min(df_filtered()$lat),
                   options = list(minZoom = 14))%>%
       clearMarkers() %>%
-      # addAwesomeMarkers(lng = red_df$lon,
-      #                   lat = red_df$lat,
-      #                   icon =  Red,
-      #                   popup = paste("<b><a href='",red_df$wiki_url,"'>",
-      #                                 red_df$Name,"</a></b>","<br>","<img src = '",
-      #                                 red_df$img_url, "'>")
-      # 
-      # 
-      # ) %>%
-      # addAwesomeMarkers(lng = green_df$lon,
-      #                   lat = green_df$lat,
-    #                   icon =  Green,
-    #
-    #                   popup = paste("<b><a href='",green_df$wiki_url,"'>",
-    #                                 green_df$Name,"</a></b>","<br>","<img src = '",
-    #                                 green_df$img_url, "'>")
+      addAwesomeMarkers(lng = red_df$lon,
+                        lat = red_df$lat,
+                        icon =  Red,
+                        group = "Säule 1 Ord",
+                        popup = paste("<b><a href='",red_df$wiki_url,"'>",
+                                      red_df$Name,"</a></b>","<br>","<img src = '",
+                                      red_df$img_url, "'>")
+                        
+                        
+      ) %>%
+      addAwesomeMarkers(lng = green_df$lon,
+                        lat = green_df$lat,
+                        icon =  Green,
+                        group = "Säule 2 Ord",
+                        popup = paste("<b><a href='",green_df$wiki_url,"'>",
+                                      green_df$Name,"</a></b>","<br>","<img src = '",
+                                      green_df$img_url, "'>")
+      )
     #
     #
     # ) %>%
-    addCircleMarkers(lng = green_df$lon,
-                     lat = green_df$lat,
-                     radius = 7.5,color = "black",weight = 3,opacity = 0.5,
-                     stroke = TRUE,fillColor = "green",fillOpacity = 0.4,
-                     popup = paste("<b><a href='",green_df$wiki_url,"'>",
-                                   green_df$Name,"</a></b>","<br>","<img src = '",
-                                   green_df$img_url, "'>"))%>%
-      
-      addCircleMarkers(lng = red_df$lon,
-                       lat = red_df$lat,
-                       radius = 7.5,color = "black",weight = 3,opacity = 0.5,
-                       stroke = TRUE,fillColor = "red",fillOpacity = 0.4,
-                       popup = paste("<b><a href='",red_df$wiki_url,"'>",
-                                     red_df$Name,"</a></b>","<br>","<img src = '",
-                                     red_df$img_url, "'>"))
+    # addCircleMarkers(lng = green_df$lon,
+    #                  lat = green_df$lat,
+    #                  radius = 7.5,color = "black",weight = 2,opacity = 0.5,
+    #                  stroke = TRUE,fillColor = "green",fillOpacity = 0.4,
+    #                  popup = paste("<b><a href='",green_df$wiki_url,"'>",
+    #                                green_df$Name,"</a></b>","<br>","<img src = '",
+    #                                green_df$img_url, "'>"))%>%
+    
+    # addCircleMarkers(lng = red_df$lon,
+    #                  lat = red_df$lat,
+    #                  radius = 7.5,color = "black",weight = 2,opacity = 0.5,
+    #                  stroke = TRUE,fillColor = "red",fillOpacity = 0.4,
+    #                  popup = paste("<b><a href='",red_df$wiki_url,"'>",
+    #                                red_df$Name,"</a></b>","<br>","<img src = '",
+    #                                red_df$img_url, "'>"))
     
     output$my_table<- DT::renderDataTable(DT::datatable(
       df_table_filtered(),
