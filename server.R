@@ -4,11 +4,11 @@ server <- function(input, output){
   
   output$my_leaf <- renderLeaflet({
     leaflet()%>%
-      addPolygons(data = my_shp1,color = "black", 
+      addPolygons(data = my_Sachsen,color = "black", 
                   weight  = 3, opacity = 1,
                   fillOpacity = 0,smoothFactor = 1)%>%
-      addPolylines(data = my_shp2,color = "red", 
-                   weight  = 4, opacity = 0.7, 
+      addPolylines(data = my_Network,color = "red", 
+                   weight  = 3, opacity = 0.7, 
                    smoothFactor = 1, dashArray ="4",
                    popup = paste(my_shp2$Length,"</a></b>",as.character("km"),"</a></b>")
       )%>%   

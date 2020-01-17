@@ -16,10 +16,10 @@ df$lon = as.numeric(format(df$lon, digits = 9))
 df_table<-df[c(3,7,8)]
 
 # --- shape file boundary 
-my_shp1<-st_read('./data/FederalStateBoundary.shp')
-my_shp2<-st_read('./data/KST_1st_ord.shp')
-my_shp2$Length<-my_shp2$Length/1000
-my_shp2$Length = as.numeric(format(my_shp2$Length, digits = 2))
+my_Sachsen<-st_read('./data/FederalStateBoundary.shp')
+my_Network<-st_read('./data/KST_1st_ord.shp')
+my_Network$Length<-my_Network$Length/1000
+my_Network$Length = as.numeric(format(my_Network$Length, digits = 2))
 # Create icons
 Green = makeAwesomeIcon(icon = "ios-close", iconColor = "white",
                         extraClasses = list(width = '1000px'),
