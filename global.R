@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(shinyjs)
 library(leaflet)
 library(leaflet.providers)
 library(magrittr)
@@ -8,6 +9,8 @@ library(dplyr)
 library(rgdal)
 library(utf8)
 library(sf)
+library(markdown)
+
 # --- Load Data
 df<-read.csv('./data/KST_MERGED_1_2ord_CSV.csv')
 df$lat = as.numeric(format(df$lat, digits = 9))
