@@ -1,0 +1,135 @@
+<html>
+  <body>
+      <h3>Autor</h3>
+    <p>
+    <a href="https://github.com/GiulioGenova/" target="_blank">Giulio Genova</a>
+    </p>
+    <p>eurac research - Institut für Alpine Umwelt</p>
+    <p>mail: giulio.genova@eurac.edu</p>
+    <br/>
+  <h3>Dateninformationen</h3>
+  <p>Diese Anwendung bietet eine benutzerfreundliche Schnittstelle zum Herunterladen der meteorologischen Daten des Portals Open Data Südtirol.</p>
+  <p>Die Anwendung Open Data Südtirol API und die dazugehörige Dokumentation sind auf der Webseite der Autonomen Provinz Bozen verfügbar.</p>
+  <p>
+  <a href="http://daten.buergernetz.bz.it/de/dataset/misure-meteo-e-idrografiche" target="_blank">Open Data Südtirol - Meteo data web service</a>
+    </p>
+    <p>Nachdem Sie die Stationen und Sensoren ausgewählt haben, filtern Sie die Tabelle und / oder zeichnen Sie ein Polygon auf der Karte und wählen Sie den gewünschten Zeitraum aus (die verfügbaren Daten beziehen sich auf die letzten 3 Jahre).</p>
+    <p>Sobald der Daten-Download abgeschlossen ist, wird ein Symbol "speichern" angezeigt und Sie können die Datentabelle im csv- oder json-Format speichern.
+  Sie können zwischen verschiedenen zeitlichen Aggregationen wählen. "grezzo" behält die ursprüngliche Auflösung der Datenerfassung bei.
+  (Die übliche Downloaddauer beträgt 5 oder 10 Minuten). Für die anderen Optionen der zeitlichen Aggregation (Stundenmittelwerte, Tagesmittelwerte, etc.) erhalten Sie andere Statistiken (Siehe die Abkürzungen unten).</p>
+
+  <p>Die Windrichtung wird mit den folgenden Zahlencodes neu klassifiziert und der am häufigsten Vorkommende wird den Zahlencodes zugewiesen:</p>
+  <p>1 = N; 2 = NO; 3 = O; 4 = SO; 5 = S; 6 = SW; 7 = W; 8 = NW.</p>
+    <p>Sie können zwischen verschiedenen Tabellenformaten wählen, "breit" oder "lange".
+  Das breite Tabellenformat enthält für alle Messgrößen eine entsprechende Spalte. Das lange Tabellenformat beinhaltet eine Spalte, die die Größe "Sensor" identifiziert und eine Spalte "Value" die den Messgrößen entspricht.</p>
+    <br/>
+<div>
+  <div>
+<h3>Legende zur heruntergeladenen Tabelle</h3>
+    <p>Die folgende Tabelle erklärt die Spaltenbeschriftungen und schlüsselt die Messcodes auf.</p>
+  <table class="table table-bordered table-hover table-condensed">
+<thead><tr><th title="Field #1"></th>
+<th title="Field #2">Bedeutung</th>
+</tr></thead>
+<tbody><tr>
+<td>TimeStamp</td>
+<td>Zeitstempel</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>Stationsname</td>
+</tr>
+<tr>
+<td>GS</td>
+<td>Globalstrahlung</td>
+</tr>
+<tr>
+<td>HS</td>
+<td>Schneehöhe</td>
+</tr>
+<tr>
+<td>LD.RED</td>
+<td>Luftdruck</td>
+</tr>
+<tr>
+<td>LF</td>
+<td>Relative Luftfeuchte</td>
+</tr>
+<tr>
+<td>LT</td>
+<td>Lufttemperatur</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Niederschlag</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>Durchfluss</td>
+</tr>
+<tr>
+<td>SD</td>
+<td>Sonnenscheindauer</td>
+</tr>
+<tr>
+<td>W</td>
+<td>Wassertemperatur</td>
+</tr>
+<tr>
+<td>WG</td>
+<td>Windgeschwindigkeit</td>
+</tr>
+<tr>
+<td>WG.BOE</td>
+<td>Windböe</td>
+</tr>
+<tr>
+<td>WR</td>
+<td>Windrichtung</td>
+</tr>
+<tr>
+<td>WT</td>
+<td>Wassertemperatur</td>
+</tr>
+</tbody></table>
+    <br/>
+</div>
+<div>
+    <p>Im „Lang“-Tabellen Format werden in der Spalte  „Sensor“ die verschiedenen Messungen  (LT, N, WG usw.) und in der Spalte „Value“, die numerischen Werte der Messungen gelistet. </p>
+    <p>Beim Herunterladen „bearbeiteter“ Daten wird der Messbezeichnung eine Endung beigefügt, welche die durchgeführte Statistik über die jeweilige gewählte Zeitspanne angibt.</p>
+    <p>Es folgen die genannten Endungen:</p>
+    <p>*<b>_mean</b> : der Mittelwert der jeweiligen Zeitspanne</p>
+    <p>*<b>_sum</b> : die Summe der jeweiligen Zeitspanne</p>
+    <p>*<b>_max</b> : der Maximalwert der jeweiligen Zeitspanne</p>
+    <p>*<b>_min</b> : der Minimalwert der jeweiligen Zeitspanne</p>
+    <p>*<b>_na</b> : die Anzahl der fehlenden Werte in der jeweiligen Zeitspanne</p>
+    <p>*<b>_Dir</b> : die Windrichtung, klassifiziert wie folgt:</p>
+    <p>1 = N; 2 = NE; 3 = E; 4 = SE; 5 = S; 6 = SW; 7 = W; 8 = NW</p>
+</div>
+</div>
+    <h3>Haftungsausschluss</h3>
+    <p>Die Qualität der mit dieser Anwendung heruntergeladenen meteorologischen Daten ist nicht garantiert, da sie weder vom Datenanbieter, noch von den Entwicklern dieser WebApp validiert wurden.
+  Diese WebApp hat ausschließlich den Zweck, den Zugriff auf die meteorologischen und Hydrologischen Daten des Portals Open Data Südtirol zu erleichtern.</p>
+    <br/>
+    <h3>Starten Sie die Anwendung unter: Von Github heruntergeladen</h3>
+    <p>Der Quellcode ist unter folgendem Link verfügbar:</p>
+    <p>
+    <a href="https://github.com/GiulioGenova/MeteoBrowser/" target="_blank">Giulio Genova - MeteoBrowser</a>
+    </p>
+    <p>Um die Anwendung zu starten, führen Sie die folgende Zeichenkette aus:</p>
+    <pre><code>
+    <p>if(!require(devtools)) install.packages("devtools")
+
+devtools::install_github("GiulioGenova/MeteoBrowser")
+
+run_app('MeteoBrowser')</p>
+    </code></pre>
+    <p>Dadurch werden automatisch alle notwendigen Pakete auf Ihrem Computer installiert (nur bei der ersten Ausführung erforderlich) und die Webanwendung wird gestartet.</p>
+    <br/>
+    <h3>Danksagungen</h3>
+    <p>Wir möchten uns bei Mattia Rossi bedanken, der das Paket R"MonalisR" entwickelt und eine wichtige Rolle in der Programmierung dieser Anwendung eingenommen hat. Das Paket finden Sie unter folgendem Link:</p>
+    <p>
+    <a href="https://gitlab.inf.unibz.it/earth_observation_public/MonalisR" target="_blank">MonalisR</a>
+    </p>
+    </body>
+    </html>
