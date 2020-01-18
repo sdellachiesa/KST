@@ -1,16 +1,20 @@
 server <- function(input, output){
   
+  output$about_out  <- renderUI({
+    includeHTML("./data/about.html")
+    })
   
-  
+  #my_info<-renderMarkdown(file = "./data/include.md", encoding = "UTF-8")
   output$my_leaf <- renderLeaflet({
     leaflet()%>%
-      addPolygons(data = my_Sachsen,color = "black", 
+      addPolylines(data = my_Sachsen,color = "black", 
                   weight  = 3, opacity = 1,
-                  fillOpacity = 0,smoothFactor = 1, group ="Sachsen")%>%
+                  fillOpacity = 0,smoothFactor = 1, group ="Sachsen", stroke = TRUE, noClip = TRUE)%>%
       addPolylines(data = my_Network,color = "red", 
-                   weight  = 3, opacity = 0.7, 
+                   weight  = 3, opacity = 0.5, 
                    smoothFactor = 1, dashArray ="4", group ="Netzwerk 1 Ord",
                    popup = paste(my_shp2$Length,"</a></b>",as.character("km"),"</a></b>")
+                   
       )%>%   
       #leaflet() %>%
       addProviderTiles(providers$OpenTopoMap, group='Topo') %>%
@@ -18,7 +22,7 @@ server <- function(input, output){
       addLayersControl(
         baseGroups = c('Topo', 'Satellite'),
         overlayGroups = c("Sachsen", "Netzwerk 1 Ord","Säule 1 Ord","Säule 2 Ord"),
-            options = layersControlOptions(collapsed = FALSE))%>%
+            options = layersControlOptions(collapsed = TRUE))%>%
       hideGroup("Säule 2 Ord")%>%
       setView(13.3, 50.3,zoom = 10)%>% #13.169629, 50.860422,
       #setMaxBounds(lng1 = max(df$lon),lat1 = max(df$lat),
@@ -70,8 +74,11 @@ server <- function(input, output){
                         icon =  Red,
                         group = "Säule 1 Ord",
                         popup = paste("<b><a href='",red_df$wiki_url,"'>",
-                                      red_df$Name,"</a></b>","<br>","<img src = '",
-                                      red_df$img_url, "'>")
+                                      paste("Säule N°",red_df$Name),"</a></b>",
+                                      "<br>",
+                                      paste("Höhe ",red_df$Hoehe," m"),
+                                      "<br>",
+                                      "<img src = '", red_df$img_url, "'>")
                         
                         
       ) %>%
@@ -80,8 +87,11 @@ server <- function(input, output){
                         icon =  Green,
                         group = "Säule 2 Ord",
                         popup = paste("<b><a href='",green_df$wiki_url,"'>",
-                                      green_df$Name,"</a></b>","<br>","<img src = '",
-                                      green_df$img_url, "'>")
+                                      paste("Säule N°",green_df$Name),"</a></b>",
+                                      "<br>",
+                                      paste("Höhe ",green_df$Hoehe," m"),
+                                      "<br>",
+                                      "<img src = '", green_df$img_url, "'>")
       )
     #
     #
