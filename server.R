@@ -26,7 +26,7 @@ server <- function(input, output){
       addPolylines(data = my_Network,color = "red", 
                    weight  = 3, opacity = 0.5, 
                    smoothFactor = 1, dashArray ="4", group ="Netzwerk 1 Ord",
-                   popup = paste(my_shp2$Length,"</a></b>",as.character("km"),"</a></b>")
+                   popup = paste(my_Network$Length,"</a></b>",as.character("km"),"</a></b>")
                    
       )%>%   
       #leaflet() %>%
@@ -37,9 +37,9 @@ server <- function(input, output){
         overlayGroups = c("Sachsen", "Netzwerk 1 Ord","Säule 1 Ord","Säule 2 Ord"),
         options = layersControlOptions(collapsed = TRUE))%>%
       hideGroup("Säule 2 Ord")%>%
-      setView(13.3, 50.3,zoom = 10)%>% #13.169629, 50.860422,
-      #setMaxBounds(lng1 = max(df$lon),lat1 = max(df$lat),
-      #lng2 = min(df$lon),lat2 = min(df$lat))%>%
+      #setView(13.3, 50.3,zoom = 10)%>% #13.169629, 50.860422,
+      setMaxBounds(lng1 = max(df$lon),lat1 = max(df$lat),
+      lng2 = min(df$lon),lat2 = min(df$lat))%>%
       addFullscreenControl()%>%
       addEasyButton(
         easyButton(
