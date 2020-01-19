@@ -19,6 +19,9 @@ server <- function(input, output){
   
   #my_info<-renderMarkdown(file = "./data/include.md", encoding = "UTF-8")
   output$my_leaf <- renderLeaflet({
+    
+    red_df = dplyr::filter(df,Ordnung == 1)
+    
     leaflet()%>%
       addPolylines(data = my_Sachsen,color = "black", 
                    weight  = 3, opacity = 1,
@@ -39,7 +42,7 @@ server <- function(input, output){
       hideGroup("Säule 2 Ord")%>%
       #setView(13.3, 50.3,zoom = 10)%>% #13.169629, 50.860422,
       setMaxBounds(lng1 = max(df$lon),lat1 = max(df$lat),
-      lng2 = min(df$lon),lat2 = min(df$lat))%>%
+                   lng2 = min(df$lon),lat2 = min(df$lat))%>%
       addFullscreenControl()%>%
       addEasyButton(
         easyButton(
@@ -52,9 +55,16 @@ server <- function(input, output){
             )
           )
         )
-      )
-    
-    
+      )%>% addAwesomeMarkers(lng = red_df$lon,
+                             lat = red_df$lat,
+                             icon =  Red,
+                             group = "Säule 1 Ord",
+                             popup = paste("<b><a href='",red_df$wiki_url,"'>",
+                                           paste("Säule N°",red_df$Name),"</a></b>",
+                                           "<br>",
+                                           paste("Höhe ",red_df$Hoehe," m"),
+                                           "<br>",
+                                           "<img src = '", red_df$img_url, "'>"))
     
   })
   
