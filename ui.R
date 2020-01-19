@@ -5,8 +5,6 @@ header <- dashboardHeader(
 
 
 
-
-
 # a("Wikipedia",
 #   href = "https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsische_Triangulirung")
 # )
