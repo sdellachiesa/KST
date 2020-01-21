@@ -1,7 +1,19 @@
 
-header <- dashboardHeader(
-  title = ("Königlich-Sächsische Triangulierung"),
-  titleWidth = 400)
+
+
+# header <- dashboardHeader(
+#   title = ("Sächsische Triangulirung Browser"),
+#   titleWidth = 400)
+
+header <<- dashboardHeader(titleWidth = 350)
+
+anchor <<- tags$a(href='https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsische_Triangulirung',
+                  tags$img(style="vertical-align: bottom;width: 350px;",#padding-right: 10px;
+                           #src='http://www.eurac.edu/Style%20Library/logoEURAC.jpg'),#, height='60', width='50'
+                           src='Logo.jpg'),
+                  class='tit')
+
+header$children[[2]]$children <<- tags$div(anchor,class = 'name')
 
 
 
@@ -10,17 +22,18 @@ header <- dashboardHeader(
 # )
 
 body <- dashboardBody(
-  tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+  #tags$img(src = "./data/KST_Logo.jpg"),
+   tags$head(
+     tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
   ),
   tags$a(
-    href="https://github.com/stefanodellachiesa/KST",
+    href="https://github.com/sdellachiesa/KST",
     tags$img(
       style="position: absolute; top: 0; right: 0; border: 0;z-index: 5;z-index: 5000;",
-      src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149",
+      #src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149",
       #src="https://github.blog/wp-content/uploads/2008/12/forkme_right_orange_ff7600.png?resize=149%2C149",
       #src="https://github.blog/wp-content/uploads/2008/12/forkme_right_gray_6d6d6d.png?resize=149%2C149",
-      #src="https://github.blog/wp-content/uploads/2008/12/forkme_right_red_aa0000.png?resize=149%2C149",
+      src="https://github.blog/wp-content/uploads/2008/12/forkme_right_red_aa0000.png?resize=149%2C149",
       alt="Fork me on GitHub",
       width="110",
       height="110",
@@ -32,23 +45,11 @@ body <- dashboardBody(
   ),
   
   
-  # tags$a(
-  #   href="https://github.com/stefanodellachiesa/KST",
-  #   tags$img(style="position: absolute; top: 0; right: 0; border: 0;z-index: 5;z-index: 5000;",
-  #            src="https://github.blog/wp-content/uploads/2008/12/forkme_right_green_007200.png?resize=135%2C135",
-  #            alt="Fork me on GitHub",
-  #            width="135",
-  #            height="135",
-  #            class="github-fork-ribbon"
-  #            
-  #   )
-  #   
-  # ),
   tabItems(
     tabItem(tabName = "data",
             fluidRow(
               column(width = 6,
-                     box(width = NULL, status = "warning",
+                     box(width = NULL,  #,status = "warning"
                          sliderInput(inputId = "slider",
                                      label = "Wählen Sie den Höhenbereich [m]",
                                      min = min(df$Hoehe),
@@ -90,8 +91,7 @@ dashboardSidebar<- dashboardSidebar(disable = FALSE,
                                     # menuItem("Info:To Be Defined")
 )
 
-dashboardPage(skin = "red",
-              header,
+dashboardPage(header,
               dashboardSidebar,
               body
 )
