@@ -23,8 +23,13 @@ header$children[[2]]$children <<- tags$div(anchor,class = 'name')
 
 body <- dashboardBody(
   #tags$img(src = "./data/KST_Logo.jpg"),
+<<<<<<< HEAD
    tags$head(
      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+=======
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
+>>>>>>> daba7769d2a22baa76564dc422e2850174ea7dbc
   ),
   tags$a(
     href="https://github.com/sdellachiesa/KST",
