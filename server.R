@@ -21,6 +21,7 @@ server <- function(input, output){
   output$my_leaf <- renderLeaflet({
     
     red_df = dplyr::filter(df,Ordnung == 1)
+    green_df = dplyr::filter(df,Ordnung == 2)
     
     leaflet()%>%
       addPolylines(data = my_Sachsen,color = "black", 
@@ -40,10 +41,12 @@ server <- function(input, output){
         overlayGroups = c("Sachsen", "Netzwerk 1 Ord","Säule 1 Ord","Säule 2 Ord"),
         options = layersControlOptions(collapsed = TRUE))%>%
       hideGroup("Säule 2 Ord")%>%
-      #setView(13.3, 50.3,zoom = 10)%>% #13.169629, 50.860422,
-      setMaxBounds(lng1 = max(df$lon),lat1 = max(df$lat),
-                   lng2 = min(df$lon),lat2 = min(df$lat))%>%
+      setView(13.169629, 50.860422,zoom = 7)%>% 
+      #setMaxBounds(lng1 = max(df$lon),lat1 = max(df$lat),
+                 #  lng2 = min(df$lon),lat2 = min(df$lat))%>%
       addFullscreenControl()%>%
+      # addControl(actionButton("zoomer","Reset view"),
+      #            position="topleft")%>%
       addEasyButton(
         easyButton(
           position = "topleft",
@@ -55,31 +58,45 @@ server <- function(input, output){
             )
           )
         )
-      )%>% addAwesomeMarkers(lng = red_df$lon,
-                             lat = red_df$lat,
-                             icon =  Red,
-                             group = "Säule 1 Ord",
-                             popup = paste("<b><a href='",red_df$wiki_url,"'>",
-                                           paste("Säule N°",red_df$Name),"</a></b>",
-                                           "<br>",
-                                           paste("Höhe ",red_df$Hoehe," m"),
-                                           "<br>",
-                                           "<img src = '", red_df$img_url, "'>"))
+      )%>% 
+      addAwesomeMarkers(lng = red_df$lon,
+                        lat = red_df$lat,
+                        icon =  Red,
+                        group = "Säule 1 Ord",
+                        popup = paste("<b><a href='",red_df$wiki_url,"'>",
+                                      paste("Säule N°",red_df$Name),"</a></b>",
+                                      "<br>",
+                                      paste("Höhe ",red_df$Hoehe," m"),
+                                      "<br>",
+                                      "<img src = '", red_df$img_url, "'>"))%>%
+      addAwesomeMarkers(lng = green_df$lon,
+                        lat = green_df$lat,
+                        icon =  Green,
+                        group = "Säule 2 Ord",
+                        popup = paste("<b><a href='",green_df$wiki_url,"'>",
+                                      paste("Säule N°",green_df$Name),"</a></b>",
+                                      "<br>",
+                                      paste("Höhe ",green_df$Hoehe," m"),
+                                      "<br>",
+                                      "<img src = '", green_df$img_url, "'>"))
     
-  })
-  
-  ##  filter data
-  
-  df_filtered <- reactive({
-    df[df$Hoehe >= input$slider[1] & df$Hoehe <= input$slider[2] , ]
-  }
-  )
+  }) 
+    
+    
+    ##  filter data
+    
+    df_filtered <- reactive({
+      df[df$Hoehe >= input$slider[1] & df$Hoehe <= input$slider[2] , ]
+    }
+    )
   df_table_filtered <- reactive({
     df_table[df_table$Hoehe >= input$slider[1] & df_table$Hoehe <= input$slider[2] , ]
   }
   )
   
-  
+  # observeEvent(input$zoomer,
+  #              {leafletProxy("my_leaf") %>%
+  #                  setView(13.169629, 50.860422,zoom = 7)})
   ## respond to the filtered data
   observe({
     

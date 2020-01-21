@@ -9,7 +9,8 @@ library(dplyr)
 library(rgdal)
 library(utf8)
 library(sf)
-library(markdown)
+#library(markdown)
+library(htmltools)
 
 # --- Load Data
 df<-read.csv('./data/KST_MERGED_1_2ord_CSV.csv')
