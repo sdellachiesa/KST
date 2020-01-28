@@ -8,8 +8,7 @@
 header <<- dashboardHeader(titleWidth = 350)
 
 anchor <<- tags$a(href='https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsische_Triangulirung',
-                  tags$img(style="vertical-align: bottom;width: 350px;",#padding-right: 10px;
-                           #src='http://www.eurac.edu/Style%20Library/logoEURAC.jpg'),#, height='60', width='50'
+                  tags$img(style="vertical-align: bottom;width: 350px;",
                            src='Logo.jpg'),
                   class='tit')
 
@@ -23,13 +22,8 @@ header$children[[2]]$children <<- tags$div(anchor,class = 'name')
 
 body <- dashboardBody(
   #tags$img(src = "./data/KST_Logo.jpg"),
-<<<<<<< HEAD
-   tags$head(
-     tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
-=======
-  tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"),
->>>>>>> daba7769d2a22baa76564dc422e2850174ea7dbc
+  tags$head(tags$link(rel = "stylesheet",type = "text/css", href = "custom.css"),
+              tags$link(rel="shortcut icon", href="www/test_1.png.PNG")
   ),
   tags$a(
     href="https://github.com/sdellachiesa/KST",
@@ -96,7 +90,8 @@ dashboardSidebar<- dashboardSidebar(disable = FALSE,
                                     # menuItem("Info:To Be Defined")
 )
 
-dashboardPage(header,
+dashboardPage(title = "Triangulierung Browser",
+              header,
               dashboardSidebar,
               body
 )
