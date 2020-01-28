@@ -25,20 +25,24 @@ server <- function(input, output){
     
     leaflet()%>%
       addPolylines(data = my_Sachsen,color = "black", 
-                   weight  = 3, opacity = 1,
+                   weight  = 3, opacity = 0.6,
                    fillOpacity = 0,smoothFactor = 1, group ="Sachsen", stroke = TRUE, noClip = TRUE)%>%
       addPolylines(data = my_Network,color = "red", 
-                   weight  = 3, opacity = 0.5, 
+                   weight  = 3, opacity = 0.8, 
                    smoothFactor = 1, dashArray ="4", group ="Netzwerk 1 Ord",
-                   popup = paste(my_Network$Length,"</a></b>",as.character("km"),"</a></b>")
+                   popup = paste(my_Network$Length,"</a></b>",as.character("km"),"</a></b>"))%>%   
+      addPolylines(data = my_Network2,color = "green", 
+                   weight  = 2, opacity = 0.8, 
+                   smoothFactor = 1, dashArray ="4", group ="Netzwerk 2 Ord",
+                   popup = paste(my_Network2$Length,"</a></b>",as.character("km"),"</a></b>")
                    
-      )%>%   
+      )%>% 
       #leaflet() %>%
       addProviderTiles(providers$OpenTopoMap, group='Topo') %>%
       addProviderTiles(providers$Esri.WorldImagery, group='Satellite')%>%
       addLayersControl(
         baseGroups = c('Topo', 'Satellite'),
-        overlayGroups = c("Sachsen", "Netzwerk 1 Ord","Säule 1 Ord","Säule 2 Ord"),
+        overlayGroups = c("Sachsen", "Netzwerk 1 Ord","Netzwerk 2 Ord","Säule 1 Ord","Säule 2 Ord"),
         options = layersControlOptions(collapsed = TRUE))%>%
       hideGroup("Säule 2 Ord")%>%
       setView(13.169629, 50.860422,zoom = 7)%>% 
