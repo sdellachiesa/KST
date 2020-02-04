@@ -14,8 +14,14 @@ Elevation was automatical retrieved by querying the Digital Elevation Model (DEM
 The Triangulation Network similary to the Triangulation Points are clickable and show the distance between two Points in km.
 
 **Slider**
+
 The slider allows to filter the points in the Map Area (*Kart*e) within an elevation range.
 The slider affect also the list of points in the Data table (*Datentabelle*).
+
+**Data Table**
+
+Data table (*Datentabelle*)  shows in a tabular manner the list of the triangulation points.
+Each filed can be sorted and content can be searched.
 
 
 ### Requirements
@@ -49,19 +55,13 @@ https://stefanodellachiesa.shinyapps.io/Koeniglich-Saechsische-Triangulierung-Br
 * [RStudio](https://rstudio.com/)
 * [Shiny-Package](https://shiny.rstudio.com/)
 
-## Contributing
-
-
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Author
 
 **Stefano Della Chiesa** 
+
 ## Contributor
-Special thanks to Giulio Genova https://github.com/GiulioGenova for the support and debugging.
+
+**Giulio Genova** https://github.com/GiulioGenova
 
 ## License
 
