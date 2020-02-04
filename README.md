@@ -45,7 +45,7 @@ run_app()
 
 A stable online version is available here:
 
-* [Triangulierung Browser] (https://stefanodellachiesa.shinyapps.io/Koeniglich-Saechsische-Triangulierung-Browser/)
+* [Triangulierung Browser](https://stefanodellachiesa.shinyapps.io/Koeniglich-Saechsische-Triangulierung-Browser/)
 
 
 ## Built With
