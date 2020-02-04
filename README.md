@@ -27,8 +27,6 @@ Each filed can be sorted and content can be searched.
 ### Requirements
 
 - The package depends on: R (>= 3.6.0)
-- Imports from CRAN the following R packages:
-	  remotes, leaflet.extras, leaflet, httr, jsonlite, sp, dplyr, spdplyr, lubridate, shinydashboard, shiny, MonalisR, tidyr, purrr, magrittr
 
 ### Installing
 
@@ -47,7 +45,7 @@ run_app()
 
 A stable online version is available here:
 
-* [Triangulierung Browser] https://stefanodellachiesa.shinyapps.io/Koeniglich-Saechsische-Triangulierung-Browser/
+* [Triangulierung Browser] (https://stefanodellachiesa.shinyapps.io/Koeniglich-Saechsische-Triangulierung-Browser/)
 
 
 ## Built With
@@ -62,7 +60,9 @@ A stable online version is available here:
 
 ## Contributor
 
-**Giulio Genova** https://github.com/GiulioGenova
+* [Giulio Genova](https://github.com/GiulioGenova) 
+
+
 
 ## License
 
