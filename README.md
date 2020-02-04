@@ -1,13 +1,30 @@
-=======
-Project Title
-Shiny App to interactively visualize a map of geodedic points.
+## Königlich  Sächsische Triangulierung (KST) Säule  Netzwerk
+KST is a simple Shiny App to interactively visualize a map of geodedic points and triangulation network.
+Each point represent Triangulation point connected by a triangulation network.
+
+A stable online version is available here:
+https://stefanodellachiesa.shinyapps.io/Koeniglich-Saechsische-Triangulierung-Browser/
+
+## How to:
+
+In the upper right part of the map area you find the layer that can be selected:
+Satellite, TopMap, Sachsen boundary, Triangulation Point 1st and 2nd order and also the triangulation netowrk for the 1st and 2nd order.
+
+There are two different triangulation points:
+First Order points (1. Ordnung) and Second Order points (2. Ordnung).
+Each point is clickable and has additional information regardin the Toponym, Sequential number of the point, Order(First or Second) and Elevation.
+Elevation was automaticall retrieved by querying the Digital Elevation Model (DEM) of Saxony (source: GeoSN https://www.geodaten.sachsen.de) with QGIS (https://qgis.org). Thus, Elevation might not be accurate due to DEM resolution.
+
+The Triangulatino Network similary to the Triangualtion Points (Säule) are clickable and show the distance between two Points in km.
+
+
+## Getting Started
+
+
 get coordiantes of the points via data("KSTS_1_2ord.csv")
 query points by elevation 
 interactive markes with infos, hyperlink to video and photos.
 One Paragraph of project description goes here
-
-## Getting Started
-
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
