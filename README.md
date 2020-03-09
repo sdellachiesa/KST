@@ -1,5 +1,5 @@
 ## Königlich  Sächsische Triangulierung (KST) Säule  Netzwerk
-KST is a simple Shiny App to interactively visualize a map of geodedic points and triangulation network.
+KST is a simple Shiny App to interactively visualize a map of geodedic points and triangulation network of the former "Königlich  Sächsische Triangulierung (KST) Säule  Netzwerk".
 Each point represent Triangulation point connected by a triangulation network.
 
 ## How to:
