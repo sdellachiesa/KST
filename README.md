@@ -8,7 +8,7 @@ Each point represent Triangulation point connected by a triangulation network.
 In the upper right part of the map area you find the layer that can be selected:
 Satellite & TopMap (Base Layers), Federal State of Saxony Boundary, Triangulation Point 1st and 2nd order and also the 1st and 2nd Triangulation Network.
 
-Each point is clickable and has additional information regardin the Toponym, Sequential number of the point, Order(First or Second) and Elevation.
+Each point is clickable and has additional information regardin the Toponym, Sequential number of the point, Order (First or Second) and Elevation.
 Elevation was automatical retrieved by querying the Digital Elevation Model (DEM) of Saxony (source: GeoSN https://www.geodaten.sachsen.de) with QGIS (https://qgis.org). Thus, Elevation might not be accurate due to DEM resolution.
 
 The Triangulation Network similary to the Triangulation Points are clickable and show the distance between two Points in km.
