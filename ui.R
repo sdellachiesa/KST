@@ -12,7 +12,8 @@ anchor <<- tags$a(href='https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsi
                            src='Logo.jpg'),
                   class='tit')
 
-header$children[[2]]$children <<- tags$div(anchor,class = 'name')
+
+#header$children[[2]]$children <<- tags$div(anchor,class = 'name')
 
 
 
@@ -22,6 +23,7 @@ header$children[[2]]$children <<- tags$div(anchor,class = 'name')
 
 body <- dashboardBody(
   #tags$img(src = "./data/KST_Logo.jpg"),
+  tags$head(includeHTML(("google-analytics.html"))),
   tags$head(tags$link(rel = "stylesheet",type = "text/css", href = "custom.css"),
               tags$link(rel="shortcut icon", href="www/test_1.png.PNG")
   ),
