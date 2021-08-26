@@ -4,7 +4,8 @@
 # header <- dashboardHeader(
 #   title = ("Sächsische Triangulirung Browser"),
 #   titleWidth = 400)
-
+min = min(df$Hoehe)
+max = max(df$Hoehe)
 header <<- dashboardHeader(titleWidth = 350)
 
 anchor <<- tags$a(href='https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsische_Triangulirung',
@@ -12,10 +13,7 @@ anchor <<- tags$a(href='https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsi
                            src='Logo.jpg'),
                   class='tit')
 
-
 header$children[[2]]$children <<- tags$div(anchor,class = 'name')
-
-
 
 # a("Wikipedia",
 #   href = "https://de.wikipedia.org/wiki/K%C3%B6niglich-S%C3%A4chsische_Triangulirung")
@@ -97,3 +95,4 @@ dashboardPage(title = "Triangulierung Browser",
               dashboardSidebar,
               body
 )
+
