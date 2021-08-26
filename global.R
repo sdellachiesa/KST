@@ -40,3 +40,4 @@ Red = makeAwesomeIcon(icon = "ios-close", iconColor = "white",
 df$IconsCol = ifelse(df$Ordnung  ==1,
                      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
                      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png")
+
