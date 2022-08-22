@@ -44,7 +44,7 @@ server <- function(input, output){
         baseGroups = c('Topo', 'Satellite'),
         overlayGroups = c("Sachsen", "Netzwerk 1 Ord","Netzwerk 2 Ord","Säule 1 Ord","Säule 2 Ord"),
         options = layersControlOptions(collapsed = TRUE))%>%
-      hideGroup("Säule 2 Ord")%>%
+      #hideGroup("Säule 2 Ord")%>%
       setView(13.169629, 50.860422,zoom = 7)%>% 
       #setMaxBounds(lng1 = max(df$lon),lat1 = max(df$lat),
                  #  lng2 = min(df$lon),lat2 = min(df$lat))%>%
