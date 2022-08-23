@@ -30,18 +30,10 @@ Each filed can be sorted and content can be searched.
 
 ### Installing
 
-To run the application install the package:
+To run the application clone the repository:
 
-```R
-if(!require(devtools)) install.packages("devtools")
+run the *Global.r*, *UI.r* and *server.r* files and then use the function *run_app()* in the R console or the *publish button* in RStudio
 
-devtools::install_github("sdellachiesa/KST")
-```
-and then use the function run_app
-
-```R
-run_app()
-```
 
 A stable online version is available here:
 
